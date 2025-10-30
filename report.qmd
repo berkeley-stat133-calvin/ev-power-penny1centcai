@@ -8,7 +8,7 @@ format: typst
 ## **Part 0: libraries**
 
 ```{r}
-
+library(dplyr)
 ```
 
 ## **Part 1:** **Defining Research Question**
@@ -18,13 +18,29 @@ Chosen Question:
 ## **Part 2: Data Preparation and Cleaning**
 
 ```{r}
+energyprice <- read.csv("C:/Users/jerem/Desktop/School/Berkeley/STAT 133/av-energy-price-2021-2023.csv")
+evregstate <- read.csv("C:/Users/jerem/Desktop/School/Berkeley/STAT 133/ev-registrations-by-state-2023.csv")
+renewuse21 <- read.csv("C:/Users/jerem/Desktop/School/Berkeley/STAT 133/renew-use-2021.csv")
+renewuse22 <- read.csv("C:/Users/jerem/Desktop/School/Berkeley/STAT 133/renew-use-2022.csv")
+renewuse23 <- read.csv("C:/Users/jerem/Desktop/School/Berkeley/STAT 133/renew-use-2023.csv")
+totaluse21 <- read.csv("C:/Users/jerem/Desktop/School/Berkeley/STAT 133/total-use-2021.csv")
+totaluse22 <- read.csv("C:/Users/jerem/Desktop/School/Berkeley/STAT 133/total-use-2022.csv")
+totaluse23 <- read.csv("C:/Users/jerem/Desktop/School/Berkeley/STAT 133/total-use-2023.csv")
 
+names(energyprice)[names(energyprice) == "X2021"] <- "2021"
+names(energyprice)[names(energyprice) == "X2022"] <- "2022"
+names(energyprice)[names(energyprice) == "X2023"] <- "2023"
+
+ttotaluse21<- t(totaluse21)
+totaluse21 <- as.data.frame(ttotaluse21)
+totaluse21 <- setNames(totaluse21[-1, , drop = FALSE],
+               make.names(as.character(unlist(totaluse21[1, ])), unique = TRUE))
 ```
 
 ## **Part 3: Joining / Pivoting Datasets for Analysis**
 
 ```{r}
-
+renewuse2122 <- full_join(renewuse21, renewuse22, by = "State")
 ```
 
 ## **Part 4: Mapping Visualization**
